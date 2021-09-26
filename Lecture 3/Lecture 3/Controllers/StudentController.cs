@@ -1,10 +1,12 @@
-﻿using Lecture_3.Models;
+﻿using Lecture_3.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.SqlClient;
+using Lecture_3.Models;
+
 namespace Lecture_3.Controllers
 {
     public class StudentController : Controller
@@ -12,26 +14,8 @@ namespace Lecture_3.Controllers
         // GET: Student
         public ActionResult Index()
         {
-            string connString = @"Server=DESKTOP-NM0ID5F\SQLEXPRESS; Database=UMS; Integrated Security=true";
-            SqlConnection conn = new SqlConnection(connString);
-            conn.Open();
-            string query = "select * from Students";
-            SqlCommand cmd = new SqlCommand(query, conn);
-            SqlDataReader reader = cmd.ExecuteReader();
-            List<Student> students = new List<Student>();
-            while (reader.Read()) {
-                Student s = new Student() { 
-
-                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                    Name = reader.GetString(reader.GetOrdinal("Name")),
-                    Dob = reader.GetString(reader.GetOrdinal("Dob")),
-                    Cgpa = (float)reader.GetDouble(reader.GetOrdinal("Cgpa"))
-
-                };
-                students.Add(s);
-            }
-
-            conn.Close();
+            Database db = new Database();
+            var students = db.Students.Get();
             return View(students);
         }
         [HttpGet]
@@ -44,15 +28,16 @@ namespace Lecture_3.Controllers
         public ActionResult Create(Student s)
         {
             if (ModelState.IsValid) {
-                string connString = @"Server=DESKTOP-NM0ID5F\SQLEXPRESS; Database=UMS; Integrated Security=true";
-                SqlConnection conn = new SqlConnection(connString);
-                conn.Open();
-                string query = String.Format("insert into Students values ('{0}','{1}','{2}',0.0)", s.Name, s.Dob, s.Gender);
-                SqlCommand cmd = new SqlCommand(query, conn);
-                int r = cmd.ExecuteNonQuery();
-                conn.Close();
+                Database db = new Database();
+                db.Students.Create(s);
                 return RedirectToAction("Index");
             }
+            return View(s);
+        }
+        [HttpGet]
+        public ActionResult Edit(int id) {
+            Database db = new Database();
+            var s = db.Students.Get(id);
             return View(s);
         }
 

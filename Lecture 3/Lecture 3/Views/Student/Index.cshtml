@@ -1,4 +1,4 @@
-﻿@model List<Lecture_3.Models.Student>
+﻿@model List<Lecture_3.Models.Entities.Student>
 @{
     ViewBag.Title = "Index";
 }
@@ -20,7 +20,8 @@
         <td>@s.Name</td>
         <td>@s.Dob</td>
         <td>@s.Cgpa</td>
-
+        <td><a href="/student/edit/@s.Id" class="btn btn-success">Edit</a></td>
+        <td><a class="btn btn-danger">Delete</a></td>
     </tr>
     }
 </table>
