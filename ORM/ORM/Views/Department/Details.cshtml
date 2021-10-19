@@ -1,0 +1,22 @@
+﻿@model ORM.Models.Department
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+<h4>Name: @Model.Name</h4>
+<h5>List of Students</h5>
+<table class="table table-bordered">
+    <tr>
+        <th>Name</th>
+        <th>Id</th>
+        <th>Cgpa</th>
+    </tr>
+    @foreach (var s in Model.Students) { 
+    <tr>
+        <td>@s.Name</td>
+        <td>@s.Id</td>
+        <td>@s.Cgpa</td>
+    </tr>
+    }
+</table>

@@ -19,5 +19,8 @@ namespace ORM.Models
         public string Dob { get; set; }
         public string Gender { get; set; }
         public Nullable<double> Cgpa { get; set; }
+        public Nullable<int> DepartmentId { get; set; }
+    
+        public virtual Department Department { get; set; }
     }
 }
