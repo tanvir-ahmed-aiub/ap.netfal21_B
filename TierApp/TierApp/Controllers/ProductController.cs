@@ -17,6 +17,7 @@ namespace TierApp.Controllers
         [Route("api/Product/All")]
         [HttpGet]
         public List<ProductModel> GetAll() {
+            
             return ProductService.GetAll();
         }
         [Route("api/Product/Names")]
